@@ -57,4 +57,41 @@ function spring.selection(room, entity)
     end
 end
 
+function spring.flip(room, entity, h, v)
+    local dir = entity.direction or "Up"
+    if h then
+        if dir == "Right" then
+            entity.direction = "Left"
+            return true
+        elseif dir == "Left" then
+            entity.direction = "Right"
+            return true
+        end
+    elseif v then
+        if dir == "Up" then
+            entity.direction = "Down"
+            return true
+        elseif dir == "Down" then
+            entity.direction = "Up"
+            return true
+        end
+    end
+    return false
+end
+
+function spring.rotate(room, entity, o)
+    local dir = entity.direction or "Up"
+    local order = {"Up", "Right", "Down", "Left"}
+    local index = 0
+    for i,_dir in ipairs(order) do
+        if _dir == dir then
+            index = i
+            break
+        end
+    end
+    local new_i = index + o
+    entity.direction = order[(new_i - 1) % 4 + 1]
+    return true
+end
+
 return spring
