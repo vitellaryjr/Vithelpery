@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Sprites>
+    <vithelp_bumpSpring path="objects/Vithelpery/bumpSpring/" start="idle">
+        <Justify x="0.5" y="1"/>
+        <Anim id="idle" path="idle" frames="0,1,0,1" delay="0.06" goto="idle,idle,flash,spark"/>
+        <Anim id="flash" path="idle" frames="0-7" delay="0.06" goto="idle"/>
+        <Anim id="spark" path="spark" frames="0-5" delay="0.06" goto="idle"/>
+        <Anim id="bounce" path="bounce" frames="0-4" delay="0.06" goto="off"/>
+        <Anim id="off" path="bounce" frames="4" delay="0"/>
+        <Anim id="reform" path="reform" frames="0-1" delay="0.06" goto="idle"/>
+    </vithelp_bumpSpring>
+</Sprites>
