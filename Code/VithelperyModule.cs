@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Celeste.Mod.Vithelpery.Entities;
+using System;
 
 namespace Celeste.Mod.Vithelpery;
 
@@ -26,10 +27,11 @@ public class VithelperyModule : EverestModule {
     }
 
     public override void Load() {
-        // TODO: apply any hooks that should always be active
+        // Entities
+        CountBooster.Load();
     }
 
     public override void Unload() {
-        // TODO: unapply any hooks applied in Load()
+        CountBooster.Unload();
     }
 }

@@ -12,3 +12,9 @@ entities.Vithelpery/BumpSpring.placements.description.down=A spring with propert
 entities.Vithelpery/BumpSpring.attributes.description.direction=The direction the spring should launch you.
 entities.Vithelpery/BumpSpring.attributes.description.bounceType=How the player should be launched by the spring.\nBumper: The player will be launched the same way as a bumper would, in the cardinal direction of the spring.\nBumperCancel: The same as "Bumper", but you can cancel the launch with a dash immediately.\nSpring: The player will be launched the same way as a regular spring would, but with additional freeze frames.\nSpringBoost: The same as "Spring", but holding in the horizontal of the direction will give a speed boost, similarly to bumpers.
 entities.Vithelpery/BumpSpring.attributes.description.cooldown=How long the spring should be inactive after being used.\n-1 will make the spring one-use.
+
+# Countdown Booster
+entities.Vithelpery/CountBooster.placements.name.green=Countdown Booster
+entities.Vithelpery/CountBooster.placements.description.green=A booster with a limited amount of uses.
+entities.Vithelpery/CountBooster.attributes.description.count=How many times the player can use the booster.
+entities.Vithelpery/CountBooster.attributes.description.deadly=Whether the booster should kill the player if they try using it after it's out of uses.\nIf disabled, the booster will just disappear at the last usage.
