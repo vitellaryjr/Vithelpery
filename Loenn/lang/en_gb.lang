@@ -19,3 +19,7 @@ entities.Vithelpery/CountBooster.placements.name.green=Countdown Booster
 entities.Vithelpery/CountBooster.placements.description.green=A booster with a limited amount of uses.
 entities.Vithelpery/CountBooster.attributes.description.count=How many times the player can use the booster.
 entities.Vithelpery/CountBooster.attributes.description.deadly=Whether the booster should kill the player if they try using it after it's out of uses.\nIf disabled, the booster will just disappear at the last usage.
+
+# Downwards Wall Booster
+entities.Vithelpery/DownwardsWallBooster.placements.name.booster_right=Downwards Wall Booster (Right)
+entities.Vithelpery/DownwardsWallBooster.placements.name.booster_left=Downwards Wall Booster (Left)

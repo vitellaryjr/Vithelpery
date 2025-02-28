@@ -38,10 +38,12 @@ public class VithelperyModule : EverestModule {
         // Entities
         BumpSpring.Load();
         CountBooster.Load();
+        DownwardsWallBooster.Load();
     }
 
     public override void Unload() {
         BumpSpring.Unload();
         CountBooster.Unload();
+        DownwardsWallBooster.Unload();
     }
 }
