@@ -30,10 +30,12 @@ public class BumpSpring : Entity {
     private BounceTypes bounce;
 
     private float cooldown;
+    private bool attach;
 
     public Sprite sprite;
     private VertexLight light;
     private BloomPoint bloom;
+    private StaticMover staticMover;
 
     private float respawnTimer;
 
@@ -41,12 +43,39 @@ public class BumpSpring : Entity {
         dir = data.Enum("direction", Directions.Up);
         bounce = data.Enum("bounceType", BounceTypes.Bumper);
         cooldown = data.Float("cooldown", 0.6f);
+        attach = data.Bool("attach", false);
 
         Depth = -8501;
         Add(new PlayerCollider(OnPlayer));
         Add(sprite = GFX.SpriteBank.Create("vithelp_bumpSpring"));
         Add(light = new VertexLight(Color.Teal, 1f, 16, 32));
         Add(bloom = new BloomPoint(0.5f, 16f));
+
+        if (attach) {
+            staticMover = new StaticMover();
+            staticMover.OnAttach = delegate (Platform p) {
+                Depth = p.Depth + 1;
+            };
+            switch (dir) {
+                case Directions.Up:
+                    staticMover.SolidChecker = (Solid s) => CollideCheck(s, Position + Vector2.UnitY);
+                    staticMover.JumpThruChecker = (JumpThru jt) => CollideCheck(jt, Position + Vector2.UnitY);
+                    break;
+                case Directions.Left:
+                    staticMover.SolidChecker = (Solid s) => CollideCheck(s, Position + Vector2.UnitX);
+                    staticMover.JumpThruChecker = (JumpThru jt) => CollideCheck(jt, Position + Vector2.UnitX);
+                    break;
+                case Directions.Right:
+                    staticMover.SolidChecker = (Solid s) => CollideCheck(s, Position - Vector2.UnitX);
+                    staticMover.JumpThruChecker = (JumpThru jt) => CollideCheck(jt, Position - Vector2.UnitX);
+                    break;
+                case Directions.Down:
+                    staticMover.SolidChecker = (Solid s) => CollideCheck(s, Position - Vector2.UnitY);
+                    staticMover.JumpThruChecker = (JumpThru jt) => CollideCheck(jt, Position - Vector2.UnitY);
+                    break;
+            }
+            Add(staticMover);
+        }
 
         respawnTimer = 0f;
 
@@ -133,11 +162,47 @@ public class BumpSpring : Entity {
         Audio.Play("event:/game/06_reflection/pinballbumper_hit", Position);
         sprite.Play("bounce");
         light.Visible = bloom.Visible = false;
+        if (attach) {
+            staticMover.TriggerPlatform();
+        }
     }
 
     private void Respawn() {
         Audio.Play("event:/game/06_reflection/pinballbumper_reset", Position);
         sprite.Play("reform");
         light.Visible = bloom.Visible = true;
+    }
+
+    public static void Load() {
+        On.Celeste.FloatySpaceBlock.OnStaticMoverTrigger += FloatySpaceBlock_OnStaticMoverTrigger;
+    }
+
+    public static void Unload() {
+        On.Celeste.FloatySpaceBlock.OnStaticMoverTrigger -= FloatySpaceBlock_OnStaticMoverTrigger;
+    }
+
+    private static void FloatySpaceBlock_OnStaticMoverTrigger(On.Celeste.FloatySpaceBlock.orig_OnStaticMoverTrigger orig, FloatySpaceBlock self, StaticMover sm) {
+        orig(self, sm);
+        if (sm.Entity is BumpSpring) {
+            switch ((sm.Entity as BumpSpring).dir) {
+                case BumpSpring.Directions.Up:
+                    self.sinkTimer = 0.5f;
+                    return;
+                case BumpSpring.Directions.Left:
+                    self.dashEase = 1f;
+                    self.dashDirection = Vector2.UnitX;
+                    return;
+                case BumpSpring.Directions.Right:
+                    self.dashEase = 1f;
+                    self.dashDirection = -Vector2.UnitX;
+                    break;
+                case BumpSpring.Directions.Down:
+                    self.dashEase = 1f;
+                    self.dashDirection = -Vector2.UnitY;
+                    break;
+                default:
+                    return;
+            }
+        }
     }
 }

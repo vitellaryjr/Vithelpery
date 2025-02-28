@@ -15,6 +15,7 @@ for _,dir in ipairs(directions) do
             direction = dir,
             bounceType = "BumperCancel",
             cooldown = 0.6,
+            attach = true,
         }
     })
 end

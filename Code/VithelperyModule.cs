@@ -1,4 +1,12 @@
-﻿using Celeste.Mod.Vithelpery.Entities;
+﻿using Microsoft.Xna.Framework;
+using Monocle;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MonoMod.Utils;
+using Celeste.Mod.Vithelpery.Entities;
 using System;
 
 namespace Celeste.Mod.Vithelpery;
@@ -28,10 +36,12 @@ public class VithelperyModule : EverestModule {
 
     public override void Load() {
         // Entities
+        BumpSpring.Load();
         CountBooster.Load();
     }
 
     public override void Unload() {
+        BumpSpring.Unload();
         CountBooster.Unload();
     }
 }
